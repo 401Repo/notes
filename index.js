@@ -6,5 +6,6 @@ const Notes = require('./lib/notes.js');
 const input = new Input(process.argv);
 
 if (input.action){
-  new Notes(input);
+  let note = new Notes(input);
+  note.execute(input.action);
 }
