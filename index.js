@@ -6,11 +6,13 @@ console.log('                               ');
 const Input = require('./lib/input.js');
 const Note = require('./lib/notes.js');
 
-let actualArgv = process.argv;
-let validNote = new Input(actualArgv);
-if (validNote.valid() === true) {
-  let object = new Note(validNote);
+let info = process.argv;
+let workingNote = new Input(info);
+if (workingNote.valid() === true) {
+  let object = new Note(workingNote);
   object.execute();
+
+
   console.log('                               ');
   console.log('#---------- End --------------#');
   console.log('#-----------------------------#');
