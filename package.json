@@ -21,6 +21,7 @@
   "homepage": "https://github.com/401Repo/notes#readme",
   "keywords": [],
   "dependencies": {
+    "dotenv": "^8.2.0",
     "minimist": "^1.2.5",
     "mongodb": "^3.6.2",
     "mongoose": "^5.10.9"
