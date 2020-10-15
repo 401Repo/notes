@@ -22,6 +22,7 @@
   "keywords": [],
   "dependencies": {
     "minimist": "^1.2.5",
+    "mongodb": "^3.6.2",
     "mongoose": "^5.10.9"
   },
   "devDependencies": {
