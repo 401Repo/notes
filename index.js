@@ -3,6 +3,8 @@ console.log('#-----------------------------#');
 console.log('#---------- Start ------------#');
 console.log('                               ');
 
+// Get ENV info
+require('dotenv').config();
 
 // loading my modules
 const Input = require('./lib/input.js');
@@ -13,14 +15,25 @@ const mongoose = require('mongoose');
 
 // connect to atlas
 
-mongoose.connect('mongodb+srv://rob:tranta12!@401cluster.mzm3r.mongodb.net/test?retryWrites=true&w=majority', { 
+mongoose.connect(process.env.mongoLink, {
   useNewUrlParser: true,
   useUnifiedTopology: true }
 )
   .then( () => console.log('connected to mongo'));
 
+const { Schema } = mongoose;
 
+// lets create a mongoose (model) scheema
 
+const NoteSchema = new Schema({
+  text:{type:String, required: true},
+  added:{ type:Boolean, default:false},
+  category:{type:String, required:false},
+});
+
+const NoteModel = mongoose.model('Notes', NoteSchema);
+
+// now lets run our app
 
 // fist thing to do is to pass on the info of the argsv to a variable
 
@@ -35,6 +48,20 @@ if (workingNote.valid() === true) {
   object.execute();
 
 
+  // what rudimentary info do i need to persist an objec?
+  // console.log(` this is the object: ${object}`);
+  // console.log(` this is the object text: ${object.payload}`);
+  // console.log(` this is the object category: ${object.action}`);
+
+  const newNote = new NoteModel({
+    text: object.payload,
+    category: 'default',
+    added: true,
+  });
+
+  // send it over to the db
+  newNote.save();
+
   console.log('                               ');
   console.log('#---------- End --------------#');
   console.log('#-----------------------------#');
@@ -43,6 +70,27 @@ if (workingNote.valid() === true) {
   console.log('#---------- End --------------#');
   console.log('#-----------------------------#');
 }
+
+
+
+// Search our notes BUT delay so it populate to mongo
+
+setTimeout(function(){
+  console.log('#-----------------------------#');
+  console.log('#-----------------------------#');
+  console.log();
+  console.log('These are our saved notes:');
+  console.log('#-----------------------------#');
+  console.log('#-----------------------------#');
+  NoteModel.find({})
+    .then(notes => console.log(notes));
+}, 5000);
+
+
+
+
+
+
 
 
 // // old code
