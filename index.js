@@ -155,7 +155,7 @@ if (noteinfo.valid() === true) {
       useUnifiedTopology: true }
     )
 
-    noteModel.deleteOne({ text: `${data.payload}`}, function (err) {
+    noteModel.deleteOne({ _id: `${data.payload}`}, function (err) {
       if(err) console.log('Sorry, not found.');
       console.log('Gone!');
       process.exit(1);
